@@ -14,7 +14,7 @@ import streamlit as st
 
 #Configuracion de la pagina
 
-st.set_page_config(page_title="Grupazo 4", #titulo de la pagina
+st.set_page_config(page_title="Iceberg Intelligence", #titulo de la pagina
                    layout="wide", #para que ocupe el ancho de la ventana"
                    page_icon="🐧")
 
