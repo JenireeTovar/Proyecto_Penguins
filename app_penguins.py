@@ -19,6 +19,55 @@ st.set_page_config(page_title="Grupazo 4", #titulo de la pagina
                    page_icon="🐧")
 
 import streamlit as st
+import base64
+import streamlit.components.v1 as components
+
+# --- Convertir MP3 a base64 ---
+def load_audio_base64(path):
+    with open(path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+audio_b64 = load_audio_base64("assets/musica_fondo.mp3")
+
+# --- HTML + JS con estilo Iceberg Intelligence ---
+html_code = f"""
+<div style="text-align:center; margin-top:20px;">
+
+    <button class="ice-btn" onclick="playMusic()">🐧▶️ Reproducir</button>
+    <button class="ice-btn" onclick="pauseMusic()">❄️⏸️ Pausar</button>
+
+    <br><br>
+
+    <input class="ice-slider" type="range" min="0" max="1" step="0.05" value="0.15"
+           onchange="setVolume(this.value)" style="width:200px;">
+</div>
+
+<audio id="bg-music" loop>
+    <source src="data:audio/mp3;base64,{audio_b64}" type="audio/mp3">
+</audio>
+
+<script>
+    var audio = document.getElementById("bg-music");
+    audio.volume = 0.15;
+
+    function playMusic() {{
+        audio.play();
+    }}
+
+    function pauseMusic() {{
+        audio.pause();
+    }}
+
+    function setVolume(val) {{
+        audio.volume = val;
+    }}
+</script>
+"""
+
+components.html(html_code, height=220)
+
+import streamlit as st
 
 # ⬇️ Para cambiar la opacidad de los cuadros:
 st.markdown("""
@@ -69,13 +118,13 @@ st.markdown(f"""
         margin-left: -50vw;
         margin-right: -50vw;
         width: 100vw;
-        max-height: 500px;
+        max-height: 900px;
         overflow: hidden;
        
     }}
     .banner-wrapper img {{
         width: 100%;
-        height: 500px;
+        height: 900;
         object-fit: cover;
         object-position: center;
         display: block;
@@ -109,16 +158,21 @@ def set_background(Version_nocturna_del):
 set_background("Imagenes/Version_nocturna_del.webp")
 
 #Título debajo de la cabecera
-st.title("Análisis del grupazo 4")
+st.title("Iceberg Intelligence")
 
 # Texto a poner debajo del titulo
-with st.expander("👥 Integrantes del equipo"):
+with st.expander("👥 About Us"):
     st.markdown("""
-    **Chiara Contreras**  
-    **Jenireé Tovar**  
-    **Lucia Llaneza**  
-    **Michelle Olivares**  
-    **Sara Bailon**  
+    Iceberg Intelligence nació con una idea sencilla: si solo vemos la punta del iceberg, estamos perdiendo el 90% del valor.
+Por eso analizamos, visualizamos y contamos historias con datos para revelar lo que normalmente queda oculto bajo la superficie.
+Somos un equipo que combina análisis, diseño y tecnología para crear dashboards claros, modelos fiables y recomendaciones que realmente importan.
+No prometemos "insights que cambien el mundo" mientras nos tomamos nuestras dosis de cafeína y teína. Prometemos algo mucho más difícil de encontrar: información tratada con rigor que no te hará sentir que estás leyendo jeroglíficos. Convertimos la complejidad en decisiones tranquilas y, en la medida de lo posible, humanas (o al menos, de pingüino).    
+    Integrantes:    
+        - **Chiara Contreras**  
+        - **Jenireé Tovar**  
+        - **Lucia Llaneza**  
+        - **Michelle Olivares**  
+        - **Sara Bailon**  
     """)
 
 # Carga del dataset
