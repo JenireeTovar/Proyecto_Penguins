@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import folium
 import streamlit as st
-from PIL import Image
 from streamlit_folium import st_folium
 
 from src.penguins_pipeline import (
